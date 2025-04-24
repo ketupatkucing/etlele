@@ -210,11 +210,12 @@ function startReeling() {
       fishStr -= 2
       //fishenergy.innerHTML = fishStr
 
-      if (fishStr < 3) {
+      if (fishStr <= 0) {
         //  foodBait = new Bait(x, y)
         h.pause()
         h.currentTime = 0.7
         // fishStr = 100
+       
         lineLength = 0;
         energyGauge = 50
         updateBar()
@@ -226,6 +227,8 @@ function startReeling() {
         castButton.textContent = 'Lempar';
 
         isCast = false;
+         
+        
       }
 
 
@@ -262,6 +265,7 @@ function startReeling() {
         localStorage.setItem('saldo', curSaldo);
         fishCount--
         localStorage.setItem('fishCount', fishCount);
+        alert('Dapat ikan, mancing mania? Mantap!!!!')
 
       }
 
