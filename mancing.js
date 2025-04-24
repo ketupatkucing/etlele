@@ -197,7 +197,7 @@ function startReeling() {
     if (distanceToFood <= 15) {
       //foodBait.duration = 0
       if (energyGauge > 0) {
-        energyGauge -= 2
+        energyGauge -= 1.2
         updateBar();
       }
 
@@ -207,7 +207,7 @@ function startReeling() {
 
       clearInterval(energy)
       isCast = true
-      fishStr -= 2
+      fishStr -= 1.2
       //fishenergy.innerHTML = fishStr
 
       if (fishStr <= 0) {
@@ -287,7 +287,21 @@ function stopReeling() {
     reelInterval = null;
     energy = setInterval(() => {
 
-
+const rect = canvas.getBoundingClientRect();
+    // Scale mouse coordinates to canvas resolution
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    
+    
+    const recta = line.getBoundingClientRect()
+    
+    x = (Math.floor(recta.left) - rect.left) * scaleX
+    y = (
+        (Math.floor(recta.top)) -
+        ((recta.top * (-0.01)))
+      ) *
+      scaleY
+    
       const targetFish = fishArray?.[shared.rd];
       const dx = (foodBait?.x ?? 400) - (targetFish?.x);
       const dy = (foodBait?.y ?? 800) - (targetFish?.y);
@@ -298,7 +312,11 @@ function stopReeling() {
         energyGauge += 0.25
         updateBar();
         fishStr += 0.25
+        lineLength +=1
+        line.style.height = `${lineLength}px`;
+        
         //fishenergy.innerHTML = fishStr
+        foodBait = new Bait(x,y)
 
 
       }
