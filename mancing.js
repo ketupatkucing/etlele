@@ -63,7 +63,9 @@ function castLine() {
     foodBait = new Bait(x, y);
 
   } else {
-    rotate = 115 + (Math.floor(Math.random() * 50))
+   rotate = 120 + (Math.floor(Math.random() * 50))
+   //rotate  = 120
+   
     clearInterval(energy)
     // rotate = 135
     line.style.rotate = rotate + 'deg'
@@ -79,6 +81,7 @@ function castLine() {
     reelInterval = setInterval(() => {
 line.style.height = `${lineLength}px`;
       if (lineLength > rand) {
+        console.log (lineLength)
         clearInterval(reelInterval);
         castButton.style.display = 'block'
         castButtonPlaceholder.style.display = 'none'
@@ -316,7 +319,22 @@ const rect = canvas.getBoundingClientRect();
         line.style.height = `${lineLength}px`;
         
         //fishenergy.innerHTML = fishStr
-        foodBait = new Bait(x,y)
+        if(lineLength > 400){
+          h.pause()
+          h.currentTime = 0.7
+          foodBait.duration = 0
+          lineLength = 0
+          line.style.height = `${lineLength}px`;
+          fishStr = 50
+          energyGauge = 50
+          updateBar()
+          castButton.textContent = 'Lempar';
+          clearInterval(energy)
+          isCast = false
+        } else {
+foodBait = new Bait(x,y)
+        }
+        
 
 
       }
