@@ -155,7 +155,7 @@ class Fish {
     const scaleX = canvas.width / rect.width;
     const scaleY = canvas.height / rect.height;
     this.size = (((180 * scaleX)+(180*scaleY))/2.5)+ Math.random() * 3;
-    this.speed =  ((1.3 * scaleX)+(1.3*scaleY) )/2
+    this.speed =  ((1.3 * scaleX)+(1.3*scaleY) )/1.62
     this.direction = Math.random() * Math.PI * 2;
     this.wigglePhase = Math.random() * Math.PI * 2;
   }
@@ -168,7 +168,7 @@ class Fish {
       const scaleX = canvas.width / rect.width;
       const scaleY = canvas.height / rect.height;
       
-      this.speed = ((1.3 * scaleX) + (1.3 * scaleY)) / 4
+      this.speed = ((1.3 * scaleX) + (1.3 * scaleY)) /2
       // Calculate distance to food
       const dx = foodBait.x - this.x;
       const dy = foodBait.y - this.y;
@@ -189,7 +189,7 @@ class Fish {
           const scaleX = canvas.width / rect.width;
           const scaleY = canvas.height / rect.height;
           
-          this.speed = ((1.3* scaleX) + (1.3 * scaleY)) / 2
+          this.speed = ((1.3* scaleX) + (1.3 * scaleY)) / 4
          //this.speed = 1.3 //1.2
           if (distanceToFood <= 8) {
             if (h.paused) {
