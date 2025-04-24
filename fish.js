@@ -35,7 +35,12 @@ class Food {
     this.y = y;
     this.createdAt = Date.now();
     this.duration = 7000; // Food lasts 5 seconds
-    this.size = 150 + Math.random() * 3;
+    const rect = canvas.getBoundingClientRect();
+    // Scale mouse coordinates to canvas resolution
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    this.size = (((180 * scaleX) + (180 * scaleY)) / 2.5) + Math.random() * 3;
+    //this.size = 150 + Math.random() * 3;
 
   }
 
@@ -68,7 +73,12 @@ class FoodGrow {
     this.y = y;
     this.createdAt = Date.now();
     this.duration = 7000; // Food lasts 5 seconds
-    this.size = 125 + Math.random() * 3
+    const rect = canvas.getBoundingClientRect();
+    // Scale mouse coordinates to canvas resolution
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    this.size = (((180 * scaleX) + (180 * scaleY)) / 5) + Math.random() * 3;
+    //this.size = 125 + Math.random() * 3
   }
 
   isExpired() {
@@ -95,7 +105,12 @@ class Bait {
     this.y = y; //6
     this.createdAt = Date.now();
     //this.duration = 0; // Food lasts 5 seconds
-    this.size = 75 + Math.random() * 3
+    const rect = canvas.getBoundingClientRect();
+    // Scale mouse coordinates to canvas resolution
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    this.size = (((180 * scaleX) + (180 * scaleY)) / 7.5) + Math.random() * 3;
+    //this.size = 75 + Math.random() * 3
 
   }
 
@@ -133,15 +148,27 @@ class Fish {
       this.x = x;
       this.y = y;
     }
-    this.size = 180 + Math.random() * 3;
-    this.speed = 1.1 + Math.random() * 2;
+    
+    //this.speed = 1.1 + Math.random() * 2;
+    const rect = canvas.getBoundingClientRect();
+    // Scale mouse coordinates to canvas resolution
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    this.size = (((180 * scaleX)+(180*scaleY))/2.5)+ Math.random() * 3;
+    this.speed =  ((1.3 * scaleX)+(1.3*scaleY) )/2
     this.direction = Math.random() * Math.PI * 2;
     this.wigglePhase = Math.random() * Math.PI * 2;
   }
 
   update(food, otherFish, foodBait) {
     if (foodBait) {
-      this.speed = 1.5
+      
+      const rect = canvas.getBoundingClientRect();
+      // Scale mouse coordinates to canvas resolution
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      
+      this.speed = ((1.3 * scaleX) + (1.3 * scaleY)) / 4
       // Calculate distance to food
       const dx = foodBait.x - this.x;
       const dy = foodBait.y - this.y;
@@ -157,7 +184,13 @@ class Fish {
           this.direction = Math.atan2(dy, dx);
           this.x += Math.cos(this.direction) * this.speed;
           this.y += Math.sin(this.direction) * this.speed;
-          this.speed = 1.3 //1.2
+          const rect = canvas.getBoundingClientRect();
+          // Scale mouse coordinates to canvas resolution
+          const scaleX = canvas.width / rect.width;
+          const scaleY = canvas.height / rect.height;
+          
+          this.speed = ((1.3* scaleX) + (1.3 * scaleY)) / 2
+         //this.speed = 1.3 //1.2
           if (distanceToFood <= 8) {
             if (h.paused) {
               h.play();
@@ -263,11 +296,20 @@ class FishKid {
       this.x = Math.random() * canvas.width;
       this.y = Math.random() * canvas.height;
     } else {
+      
       this.x = x;
       this.y = y;
     }
-    this.size = 70 + Math.random() * 3;
-    this.speed = 2 + Math.random() * 2;
+    const rect = canvas.getBoundingClientRect();
+    // Scale mouse coordinates to canvas resolution
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    this.size = (((180 * scaleX)+(180*scaleY))/4.5)+ Math.random() * 3;
+    this.speed =  ((1.3 * scaleX)+(1.3*scaleY) )/1.25
+    
+    
+   // this.size = 70 + Math.random() * 3;
+    //this.speed = 2 + Math.random() * 2;
     this.direction = Math.random() * Math.PI * 2;
     this.wigglePhase = Math.random() * Math.PI * 2;
 
