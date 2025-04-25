@@ -13,13 +13,13 @@ const fishenergy = document.querySelector('.fishstr')
 let unlocked = false
 
 function castLine() {
-  
-  
+
+
   if (saldo >= 1000) {
     curSaldo = saldo -= 1000
     dompet.innerHTML = ' Rp ' + curSaldo
     localStorage.setItem('saldo', curSaldo);
-    
+
   } else {
     alert('Uangmu kurang')
     return
@@ -44,15 +44,15 @@ function castLine() {
     //castButton.innerHTML = ' <img srcset="pancing.png" src="pancing.png" alt="pancing.png">'
     castButton.textContent = 'Tarik';
     isCast = true
-    
+
     const rect = canvas.getBoundingClientRect();
     // Scale mouse coordinates to canvas resolution
     const scaleX = canvas.width / rect.width;
     const scaleY = canvas.height / rect.height;
-    
-    
+
+
     const recta = line.getBoundingClientRect()
-    
+
     x = (Math.floor(recta.left) - rect.left) * scaleX
     y = (
         (Math.floor(recta.top)) -
@@ -63,9 +63,9 @@ function castLine() {
     foodBait = new Bait(x, y);
 
   } else {
-   rotate = 120 + (Math.floor(Math.random() * 50))
-   //rotate  = 120
-   
+    rotate = 120 + (Math.floor(Math.random() * 50))
+    //rotate  = 120
+
     clearInterval(energy)
     // rotate = 135
     line.style.rotate = rotate + 'deg'
@@ -79,9 +79,9 @@ function castLine() {
     //line.style.borderBottom = "solid 5px red"
     //line.style.height = `${lineLength}px`;
     reelInterval = setInterval(() => {
-line.style.height = `${lineLength}px`;
+      line.style.height = `${lineLength}px`;
       if (lineLength > rand) {
-        console.log (lineLength)
+        //console.log(lineLength)
         clearInterval(reelInterval);
         castButton.style.display = 'block'
         castButtonPlaceholder.style.display = 'none'
@@ -101,9 +101,9 @@ line.style.height = `${lineLength}px`;
         x = (Math.floor(recta.left) - rect.left) * scaleX
         y = (
             (Math.floor(recta.top)) -
-            ((recta.top*(-0.01)))
-          ) 
-          *scaleY
+            ((recta.top * (-0.01)))
+          ) *
+          scaleY
         //  x = Math.floor(recta.left)
         // y = Math.floor(recta.top) + (Math.floor(recta.top) * 0.85)
 
@@ -161,7 +161,7 @@ line.style.height = `${lineLength}px`;
 
 
 
-      
+
     }, 20);
 
   }
@@ -181,24 +181,29 @@ function startReeling() {
     // Scale mouse coordinates to canvas resolution
     const scaleX = canvas.width / rect.width;
     const scaleY = canvas.height / rect.height;
-    
-    
+
+
     const recta = line.getBoundingClientRect()
-    
+
     x = (Math.floor(recta.left) - rect.left) * scaleX
     y = (
         (Math.floor(recta.top)) -
         ((recta.top * (-0.01)))
       ) *
       scaleY
-    
+
     const targetFish = fishArray?.[shared.rd];
     const dx = (foodBait?.x ?? 400) - (targetFish?.x);
     const dy = (foodBait?.y ?? 800) - (targetFish?.y);
     const distanceToFood = Math.sqrt(dx * dx + dy * dy);
-
+    
+    
+    
     if (distanceToFood <= 15) {
+      
       //foodBait.duration = 0
+      
+      
       if (energyGauge > 0) {
         energyGauge -= 1.2
         updateBar();
@@ -218,7 +223,7 @@ function startReeling() {
         h.pause()
         h.currentTime = 0.7
         // fishStr = 100
-       
+
         lineLength = 0;
         energyGauge = 50
         updateBar()
@@ -230,12 +235,16 @@ function startReeling() {
         castButton.textContent = 'Lempar';
 
         isCast = false;
-         
-        
+
+
       }
 
 
 
+      
+    
+    
+      
     }
 
     foodBait = new Bait(x, y)
@@ -255,8 +264,8 @@ function startReeling() {
       isCast = false;
 
       if (typeof fishArray[shared.rd] !== 'undefined' &&
-      fishArray[shared.rd].x > ((310*scaleX)+(310*scaleY))/3 &&
-      fishArray[shared.rd].y > ((700*scaleX)+(700*scaleY))/3
+        fishArray[shared.rd].x > ((310 * scaleX) + (310 * scaleY)) / 3 &&
+        fishArray[shared.rd].y > ((700 * scaleX) + (700 * scaleY)) / 3
         //fishArray[shared.rd].x > 310 &&
         //fishArray[shared.rd].y > 705
       ) {
@@ -290,21 +299,21 @@ function stopReeling() {
     reelInterval = null;
     energy = setInterval(() => {
 
-const rect = canvas.getBoundingClientRect();
-    // Scale mouse coordinates to canvas resolution
-    const scaleX = canvas.width / rect.width;
-    const scaleY = canvas.height / rect.height;
-    
-    
-    const recta = line.getBoundingClientRect()
-    
-    x = (Math.floor(recta.left) - rect.left) * scaleX
-    y = (
-        (Math.floor(recta.top)) -
-        ((recta.top * (-0.01)))
-      ) *
-      scaleY
-    
+      const rect = canvas.getBoundingClientRect();
+      // Scale mouse coordinates to canvas resolution
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+
+
+      const recta = line.getBoundingClientRect()
+
+      x = (Math.floor(recta.left) - rect.left) * scaleX
+      y = (
+          (Math.floor(recta.top)) -
+          ((recta.top * (-0.01)))
+        ) *
+        scaleY
+
       const targetFish = fishArray?.[shared.rd];
       const dx = (foodBait?.x ?? 400) - (targetFish?.x);
       const dy = (foodBait?.y ?? 800) - (targetFish?.y);
@@ -315,11 +324,12 @@ const rect = canvas.getBoundingClientRect();
         energyGauge += 0.25
         updateBar();
         fishStr += 0.25
-        lineLength +=1
+
+        lineLength += 1
         line.style.height = `${lineLength}px`;
         
         //fishenergy.innerHTML = fishStr
-        if(lineLength > 400){
+        if (lineLength > 400) {
           h.pause()
           h.currentTime = 0.7
           foodBait.duration = 0
@@ -332,9 +342,10 @@ const rect = canvas.getBoundingClientRect();
           clearInterval(energy)
           isCast = false
         } else {
-foodBait = new Bait(x,y)
+
+          foodBait = new Bait(x, y)
         }
-        
+
 
 
       }
