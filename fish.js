@@ -420,7 +420,7 @@ function jualIkan() {
 }
 
 function beliIkan() {
-  if (saldo <= 14000) {
+  if (saldo < 14000) {
     alert('Uangmu kurang')
   } else {
     curSaldo = saldo -= 14000
@@ -459,7 +459,7 @@ canvas.addEventListener('click', (event) => {
 
     if (bibit.checked == true) {
 
-      if (saldo <= 2000) {
+      if (saldo < 2000) {
         alert('Uangmu kurang')
       } else {
         food = new Food(x, y);
@@ -483,7 +483,7 @@ canvas.addEventListener('click', (event) => {
       }
     }
     if (besaran.checked == true) {
-      if (saldo <= 1000) {
+      if (saldo < 1000) {
         alert('Uangmu kurang')
       } else {
 
