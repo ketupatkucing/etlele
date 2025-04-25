@@ -15,7 +15,7 @@ let unlocked = false
 function castLine() {
   
   
-  if (saldo > 1000) {
+  if (saldo >= 1000) {
     curSaldo = saldo -= 1000
     dompet.innerHTML = ' Rp ' + curSaldo
     localStorage.setItem('saldo', curSaldo);
