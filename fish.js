@@ -17,6 +17,15 @@ resizeCanvas();
 
 let saldo = parseInt(localStorage.getItem('saldo') || 15000);
 dompet.innerHTML = ' Rp ' + saldo
+if (saldo < 1000) {
+  duitRegen = setInterval(() => {
+    curSaldo = saldo += 1000
+    dompet.innerHTML = ' Rp ' + curSaldo
+    localStorage.setItem('saldo', curSaldo);
+  }, 3000)
+  clearInterval(duitRegen)
+}
+
 
 
 // Load fish image
@@ -148,27 +157,28 @@ class Fish {
       this.x = x;
       this.y = y;
     }
-    
+
     //this.speed = 1.1 + Math.random() * 2;
     const rect = canvas.getBoundingClientRect();
     // Scale mouse coordinates to canvas resolution
     const scaleX = canvas.width / rect.width;
     const scaleY = canvas.height / rect.height;
-    this.size = (((180 * scaleX)+(180*scaleY))/2.5)+ Math.random() * 3;
-    this.speed =  ((1.3 * scaleX)+(1.3*scaleY) )/1.62
+    this.size = (((180 * scaleX) + (180 * scaleY)) / 2.5) + Math.random() * 3;
+    this.speed = ((1.3 * scaleX) + (1.3 * scaleY)) / 1.62
     this.direction = Math.random() * Math.PI * 2;
     this.wigglePhase = Math.random() * Math.PI * 2;
   }
 
   update(food, otherFish, foodBait) {
+    
     if (foodBait) {
-      
+
       const rect = canvas.getBoundingClientRect();
       // Scale mouse coordinates to canvas resolution
       const scaleX = canvas.width / rect.width;
       const scaleY = canvas.height / rect.height;
-      
-      this.speed = ((1.3 * scaleX) + (1.3 * scaleY)) /2
+
+      this.speed = ((1.3 * scaleX) + (1.3 * scaleY)) / 2
       // Calculate distance to food
       const dx = foodBait.x - this.x;
       const dy = foodBait.y - this.y;
@@ -176,6 +186,15 @@ class Fish {
       //console.log(distanceToFood)
       // If fish is very close to food, stop moving toward it
       if (distanceToFood < 60) {
+        if (distanceToFood > 20) {
+
+          h.pause();
+          h.currentTime = 0.7;
+          //castButton.innerHTML ='<img srcset="strike.png" src="strike.png" alt="strike.png">'
+          castButton.textContent = "Tarik"
+
+
+        }
 
         if (navigator.vibrate) {
           navigator.vibrate(500);
@@ -188,10 +207,10 @@ class Fish {
           // Scale mouse coordinates to canvas resolution
           const scaleX = canvas.width / rect.width;
           const scaleY = canvas.height / rect.height;
-          
-          this.speed = ((1.3* scaleX) + (1.3 * scaleY)) / 4
-         //this.speed = 1.3 //1.2
-          if (distanceToFood <= 8) {
+
+          this.speed = ((1.3 * scaleX) + (1.3 * scaleY)) / 4
+          //this.speed = 1.3 //1.2
+          if (distanceToFood <= 15) {
             if (h.paused) {
               h.play();
               h.currentTime = 0.7;
@@ -221,41 +240,39 @@ class Fish {
           }
         }
       });
-    }
-
-
-
-
+    } 
+    
     if (food && !food.isExpired()) {
       // Calculate distance to food
+       
+        const dx = food.x - this.x;
+        const dy = food.y - this.y;
+        const distanceToFood = Math.sqrt(dx * dx + dy * dy);
 
-      const dx = food.x - this.x;
-      const dy = food.y - this.y;
-      const distanceToFood = Math.sqrt(dx * dx + dy * dy);
-
-      // If fish is very close to food, stop moving toward it
-      if (distanceToFood > 30) { // Threshold of 5 pixels
-        this.direction = Math.atan2(dy, dx);
-        this.x += Math.cos(this.direction) * this.speed;
-        this.y += Math.sin(this.direction) * this.speed;
-      }
-
-      // Repulsion from other fish
-      const repulsionDistance = 15;
-      const repulsionStrength = 4;
-      otherFish.forEach(other => {
-        if (other !== this) {
-          const distX = this.x - other.x;
-          const distY = this.y - other.y;
-          const distance = Math.sqrt(distX * distX + distY * distY);
-          if (distance < repulsionDistance && distance > 0) {
-            const pushX = (distX / distance) * repulsionStrength;
-            const pushY = (distY / distance) * repulsionStrength;
-            this.x += pushX;
-            this.y += pushY;
-          }
+        // If fish is very close to food, stop moving toward it
+        if (distanceToFood > 30) { // Threshold of 5 pixels
+          this.direction = Math.atan2(dy, dx);
+          this.x += Math.cos(this.direction) * this.speed;
+          this.y += Math.sin(this.direction) * this.speed;
         }
-      });
+
+        // Repulsion from other fish
+        const repulsionDistance = 15;
+        const repulsionStrength = 4;
+        otherFish.forEach(other => {
+          if (other !== this) {
+            const distX = this.x - other.x;
+            const distY = this.y - other.y;
+            const distance = Math.sqrt(distX * distX + distY * distY);
+            if (distance < repulsionDistance && distance > 0) {
+              const pushX = (distX / distance) * repulsionStrength;
+              const pushY = (distY / distance) * repulsionStrength;
+              this.x += pushX;
+              this.y += pushY;
+            }
+          }
+        });
+      
     }
     else {
       // Random movement
@@ -273,7 +290,14 @@ class Fish {
       // Randomly change direction slightly
       this.direction += (Math.random() - 0.5) * 0;
     }
+    
+
+    
+    
+    
+
     this.wigglePhase += 0.1;
+
   }
 
   draw() {
@@ -296,7 +320,7 @@ class FishKid {
       this.x = Math.random() * canvas.width;
       this.y = Math.random() * canvas.height;
     } else {
-      
+
       this.x = x;
       this.y = y;
     }
@@ -304,11 +328,11 @@ class FishKid {
     // Scale mouse coordinates to canvas resolution
     const scaleX = canvas.width / rect.width;
     const scaleY = canvas.height / rect.height;
-    this.size = (((180 * scaleX)+(180*scaleY))/4.5)+ Math.random() * 3;
-    this.speed =  ((1.3 * scaleX)+(1.3*scaleY) )/1.25
-    
-    
-   // this.size = 70 + Math.random() * 3;
+    this.size = (((180 * scaleX) + (180 * scaleY)) / 4.5) + Math.random() * 3;
+    this.speed = ((1.3 * scaleX) + (1.3 * scaleY)) / 1.25
+
+
+    // this.size = 70 + Math.random() * 3;
     //this.speed = 2 + Math.random() * 2;
     this.direction = Math.random() * Math.PI * 2;
     this.wigglePhase = Math.random() * Math.PI * 2;
